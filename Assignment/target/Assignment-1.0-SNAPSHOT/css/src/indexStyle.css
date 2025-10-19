@@ -1,20 +1,25 @@
 body {
-    background: #22B9C7;
+    background: url('../img/index/bg.png') no-repeat center center fixed;
+    background-size: cover;
     margin: 0;
     font-family: sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
     flex: 1 0 auto;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    justify-content: space-between;
     min-height: 100vh;
-    background: #fff;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
     max-width: 100%;
     height: 100%;
     overflow: hidden;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.09);
 }
 
 header {
@@ -25,24 +30,28 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px 12px 16px;
+    padding: 12px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: background 0.32s, border-bottom 0.32s;
+}
+.navbar:hover {
+    background: #fff;
 }
 
 .nav-logo {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 115px;              /* width cố định đủ cho 2 logo */
+    width: 115px;
     min-width: 115px;
     gap: 10px;
-    padding-left: 0;           /* không padding trái */
+    padding-left: 0;
 }
 
 .nav-logo img {
     height: 36px;
     width: auto;
     display: block;
-    /* Loại bỏ margin nếu có */
 }
 .nav-logo img:first-child {
     padding-right: 10px;
@@ -59,33 +68,44 @@ header {
     text-decoration: none;
     color: #22B9C7;
     font-weight: bold;
-    font-size: 15px;
+    font-size: 17px;
+    background: transparent;
+    border: none;
 }
 
 .nav-profile {
-    width: 115px;          /* bằng đúng chiều rộng .nav-logo */
+    width: 115px;
     min-width: 115px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 54px;          /* đảm bảo đủ cao, cao tương xứng navbar */
+    height: 54px;
 }
-
 .nav-profile img {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    object-fit: cover;     /* giúp ảnh không méo, luôn hình tròn */
-    background: #bbb;
+    object-fit: cover;
+    background: transparent;
     display: block;
 }
 
-
-.banner {
+/*.banner {
+    align-items: center;
     text-align: center;
     padding: 26px 10px 40px 10px;
-    background: #f5f7fa;
-    border-bottom: 1px solid #eee;
+    background: transparent;
+}*/
+.banner {
+    text-align: center;
+    padding: 32px 24px;
+    background: rgba(255,255,255,0.65);  /* khung trắng mờ */
+    border-radius: 24px;
+    box-shadow: 5px 10px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column; 
+    margin: 120px auto 0 auto;
+    max-width: 380px;   /* tùy chỉnh độ rộng tối đa */
 }
 
 .banner-title {
@@ -114,7 +134,6 @@ header {
 }
 
 footer {
-    justify-content: end;
     background: #f5f7fa;
     border-top: 1px solid #ececec;
     padding: 14px 18px;
