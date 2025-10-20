@@ -1,0 +1,173 @@
+Chắc chắn rồi! Dựa trên bản báo cáo chi tiết của bạn, tôi đã tạo một kịch bản (script) SQL hoàn chỉnh để thiết lập cơ sở dữ liệu cho dự án "Flash Card".
+
+Script này đã được tối ưu theo yêu cầu của bạn:
+
+username và email trong bảng Users được thiết lập là duy nhất (UNIQUE), không thể trùng lặp.
+
+Thêm vào bảng Categories để làm "menu" giúp người dùng phân loại các bộ thẻ của mình.
+
+Sử dụng các quy tắc toàn vẹn dữ liệu (ON DELETE CASCADE, ON DELETE SET NULL) để đảm bảo database luôn nhất quán.
+
+## Kịch bản (Script) SQL cho Database
+Bạn có thể sao chép toàn bộ đoạn mã dưới đây và chạy nó trong một công cụ quản lý MySQL như phpMyAdmin, MySQL Workbench, hoặc DBeaver để tạo toàn bộ cơ sở dữ liệu.
+
+SQL
+
+-- ====================================================================================
+-- SCRIPT TẠO DATABASE CHO ỨNG DỤNG FLASHCARD
+-- Tên Database: flashcard_db
+-- ====================================================================================
+
+-- Xóa database cũ nếu tồn tại để tránh lỗi và tạo lại từ đầu
+DROP DATABASE IF EXISTS flashcard_db;
+
+-- Tạo database mới với bảng mã utf8mb4 để hỗ trợ tiếng Việt và emoji
+CREATE DATABASE flashcard_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Sử dụng database vừa tạo
+USE flashcard_db;
+
+
+-- ====================================================================================
+-- Bảng 1: Users - Lưu trữ thông tin người dùng
+-- Tối ưu: username và email là duy nhất (UNIQUE)
+-- ====================================================================================
+CREATE TABLE `Users` (
+    `user_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(50) NOT NULL UNIQUE, -- Tên đăng nhập, không được trùng
+    `password_hash` VARCHAR(255) NOT NULL,    -- Lưu mật khẩu đã được mã hóa (VD: bcrypt)
+    `email` VARCHAR(100) NOT NULL UNIQUE,     -- Email, không được trùng
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Thời gian tạo tài khoản
+) ENGINE=InnoDB;
+
+
+-- ====================================================================================
+-- Bảng 2: Categories - Đóng vai trò là "Menu" để phân loại bộ thẻ
+-- Bảng này được thêm vào để đáp ứng yêu cầu "có thêm menu"
+-- ====================================================================================
+CREATE TABLE `Categories` (
+    `category_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,                 -- Mỗi category thuộc về một người dùng
+    `name` VARCHAR(100) NOT NULL,           -- Tên của danh mục (VD: Tiếng Nhật N5, Từ vựng IT)
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Ràng buộc khóa ngoại: Nếu user bị xóa, các category của họ cũng bị xóa
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE,
+
+    -- Ràng buộc: Mỗi người dùng không thể có 2 category trùng tên
+    UNIQUE (`user_id`, `name`)
+) ENGINE=InnoDB;
+
+
+-- ====================================================================================
+-- Bảng 3: Decks - Lưu trữ các bộ thẻ
+-- ====================================================================================
+CREATE TABLE `Decks` (
+    `deck_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,                 -- Bộ thẻ này của ai
+    `category_id` INT NULL,                 -- Bộ thẻ này thuộc menu/category nào (có thể không có)
+    `title` VARCHAR(150) NOT NULL,          -- Tiêu đề của bộ thẻ
+    `description` TEXT,                     -- Mô tả chi tiết
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Ràng buộc khóa ngoại: Nếu user bị xóa, các bộ thẻ của họ cũng bị xóa
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE,
+    
+    -- Ràng buộc khóa ngoại: Nếu category bị xóa, các bộ thẻ thuộc category đó sẽ không bị xóa
+    -- mà chỉ set category_id thành NULL (không phân loại)
+    FOREIGN KEY (`category_id`) REFERENCES `Categories`(`category_id`) ON DELETE SET NULL
+) ENGINE=InnoDB;
+
+
+-- ====================================================================================
+-- Bảng 4: Cards - Lưu trữ từng thẻ học trong một bộ thẻ
+-- ====================================================================================
+CREATE TABLE `Cards` (
+    `card_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `deck_id` INT NOT NULL,                 -- Thẻ này thuộc bộ nào
+    `front_content` TEXT NOT NULL,          -- Nội dung mặt trước
+    `back_content` TEXT NOT NULL,           -- Nội dung mặt sau
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Ràng buộc khóa ngoại: Nếu bộ thẻ (Deck) bị xóa, tất cả các thẻ trong đó cũng bị xóa
+    FOREIGN KEY (`deck_id`) REFERENCES `Decks`(`deck_id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+
+-- ====================================================================================
+-- Bảng 5: Practice_History - Lưu trữ lịch sử luyện tập
+-- ====================================================================================
+CREATE TABLE `Practice_History` (
+    `history_id` BIGINT AUTO_INCREMENT PRIMARY KEY, -- Sử dụng BIGINT vì bảng này có thể rất lớn
+    `user_id` INT NOT NULL,                   -- Ai đã luyện tập
+    `card_id` INT NOT NULL,                   -- Đã luyện tập thẻ nào
+    
+    -- Trạng thái của thẻ sau khi luyện tập, đúng như trong báo cáo
+    `status` ENUM('new', 'learning', 'mastered', 'reviewing') NOT NULL,
+    
+    `practiced_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Ràng buộc khóa ngoại: Nếu user bị xóa, lịch sử của họ cũng bị xóa
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE,
+
+    -- Ràng buộc khóa ngoại: Nếu thẻ bị xóa, lịch sử liên quan cũng bị xóa
+    FOREIGN KEY (`card_id`) REFERENCES `Cards`(`card_id`) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+-- ====================================================================================
+-- Chèn một vài dữ liệu mẫu để kiểm tra
+-- ====================================================================================
+INSERT INTO `Users` (`username`, `password_hash`, `email`) VALUES
+('testuser', '$2a$10$abcdefghijklmnopqrstuv', 'test@example.com'),
+('thanhvienA', '$2a$10$1234567890abcdefghij', 'thanhviena@example.com');
+
+INSERT INTO `Categories` (`user_id`, `name`) VALUES
+(1, 'Tiếng Nhật N5'),
+(1, 'Từ vựng chuyên ngành IT');
+
+INSERT INTO `Decks` (`user_id`, `category_id`, `title`, `description`) VALUES
+(1, 1, 'Bài 1: Bảng chữ cái Hiragana', 'Học các ký tự cơ bản của bảng chữ cái Hiragana.'),
+(1, 2, 'Thuật ngữ Lập trình Web', 'Các thuật ngữ phổ biến trong phát triển web front-end và back-end.');
+
+INSERT INTO `Cards` (`deck_id`, `front_content`, `back_content`) VALUES
+(1, 'あ', 'a'),
+(1, 'い', 'i'),
+(1, 'う', 'u'),
+(2, 'API', 'Application Programming Interface - Giao diện lập trình ứng dụng'),
+(2, 'Framework', 'Một bộ khung có cấu trúc định sẵn giúp phát triển phần mềm nhanh hơn.');
+
+INSERT INTO `Practice_History` (`user_id`, `card_id`, `status`) VALUES
+(1, 1, 'learning'),
+(1, 4, 'mastered');
+
+-- ====================================================================================
+-- Script hoàn tất.
+-- ====================================================================================
+## Giải thích các điểm chính
+Bảng Users:
+
+username và email có thêm ràng buộc UNIQUE. Nếu bạn cố gắng chèn một username hoặc email đã tồn tại, MySQL sẽ báo lỗi, đảm bảo dữ liệu luôn độc lập.
+
+Bảng Categories (Menu):
+
+Bảng này được thêm mới để hiện thực hóa ý tưởng "menu".
+
+Mỗi người dùng (user_id) có thể tạo ra nhiều danh mục riêng của mình.
+
+Một người dùng không thể tạo 2 danh mục có tên trùng nhau (nhờ UNIQUE (user_id, name)).
+
+Bảng Decks:
+
+Có thêm cột category_id để liên kết đến bảng Categories.
+
+Cột này được phép NULL, nghĩa là một bộ thẻ có thể không thuộc danh mục nào cả.
+
+Điểm hay: Nếu bạn xóa một Category, các Deck thuộc về nó sẽ không bị xóa theo, mà chỉ được cập nhật category_id thành NULL (nhờ ON DELETE SET NULL). Điều này an toàn hơn cho dữ liệu của người dùng.
+
+Ràng buộc ON DELETE CASCADE:
+
+Đây là một quy tắc rất mạnh. Ví dụ, khi một User bị xóa, tất cả Categories, Decks, Cards (gián tiếp), và Practice_History của người dùng đó sẽ tự động bị xóa theo. Nó giúp giữ cho cơ sở dữ liệu của bạn sạch sẽ và không có dữ liệu "mồ côi".
+
+Kiểu dữ liệu ENUM:
+
+Trong bảng Practice_History, cột status sử dụng ENUM để giới hạn các giá trị đầu vào chỉ có thể là một trong bốn trạng thái bạn đã nêu trong báo cáo. Điều này đảm bảo tính nhất quán của dữ liệu.

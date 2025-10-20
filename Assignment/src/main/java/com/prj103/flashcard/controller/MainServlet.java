@@ -80,7 +80,7 @@ public class MainServlet extends HttpServlet {
         request.setAttribute("card", flashcards.get(cardIndex));
 
         // Chuyển tiếp tới trang JSP để hiển thị
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
     }
 
     @Override

@@ -1,4 +1,9 @@
 com\prj103\flashcard\controller\MainServlet.class
 com\prj103\flashcard\model\Flashcard.class
+com\prj103\flashcard\model\DBContext.class
+com\prj103\flashcard\model\Category.class
+com\prj103\flashcard\dal\CategoryDAO.class
 com\mycompany\assignment\JakartaRestConfiguration.class
 com\mycompany\assignment\resources\JakartaEE10Resource.class
+.netbeans_automatic_build
+com\prj103\flashcard\controller\HomePageServlet.class
