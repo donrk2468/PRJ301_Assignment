@@ -30,13 +30,69 @@
             </div>
         </header>
         <footer>
-            <div class="footer-links">
-                <a href="#">Liên hệ</a>
-                <a href="#">Về chúng tôi</a>
-                <a href="#">Điều khoản</a>
+            <div class="footer-container">
+                <div class="footer-column about">
+                    <h3>Flashcard Tiếng Nhật</h3>
+                    <p>Nền tảng giúp bạn học từ vựng tiếng Nhật hiệu quả thông qua các bộ thẻ ghi nhớ thông minh.</p>
+                    <p><i class="fa fa-map-marker-alt"></i> Địa chỉ: Hà Nội, Việt Nam</p>
+                    <p><i class="fa fa-phone"></i> Điện thoại: </p>
+                    <p><i class="fa fa-envelope"></i> Email: @</p>
+                </div>
+
+                <div class="footer-column links">
+                    <h3>Liên kết nhanh</h3>
+                    <ul>
+                        <li><a href="#">Về chúng tôi</a></li>
+                        <li><a href="#">Câu hỏi thường gặp (FAQ)</a></li>
+                        <li><a href="#">Chính sách bảo mật</a></li>
+                        <li><a href="#">Điều khoản dịch vụ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column social">
+                    <h3>Kết nối với chúng tôi</h3>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <h4 class="newsletter-title">Đăng ký nhận tin</h4>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn...">
+                        <button type="submit">Đăng ký</button>
+                    </form>
+                </div>
             </div>
-            <div class="footer-info">© 2025 Flashcard Tiếng Nhật</div>
+            <div class="footer-bottom">
+                <p>© 2025 Flashcard Tiếng Nhật. Mọi quyền được bảo lưu.</p>
+            </div>
         </footer>
     </div>
 </body>
+<script>
+    function updateBannerMargin() {
+      const banner = document.querySelector(".banner");
+      if (!banner) return;
+
+      const style = getComputedStyle(banner);
+      const paddingTop = parseFloat(style.paddingTop);
+      const paddingBottom = parseFloat(style.paddingBottom);
+      const height = banner.offsetHeight;
+
+      // Tính margin-top theo công thức bạn muốn
+      const marginTop = window.innerHeight / 2 - (paddingTop + paddingBottom + height);
+
+      // Tính margin-bottom = 50vh - 60px
+      const marginBottom = 5;
+
+      banner.style.marginTop = `${marginTop}px`;
+      banner.style.marginBottom = `${marginBottom}%`;
+    }
+
+    // Gọi 1 lần khi trang load
+    window.addEventListener("load", updateBannerMargin);
+
+    // Gọi lại khi resize
+    window.addEventListener("resize", updateBannerMargin);
+</script>
 </html>
