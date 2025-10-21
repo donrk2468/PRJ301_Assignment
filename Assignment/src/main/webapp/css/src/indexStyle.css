@@ -74,6 +74,14 @@ header {
     border: none;
 }
 
+.nav-login {
+    font-size: 15px;
+    font-weight: 900;
+    color: #22B9C7;
+    padding-right: 20px; 
+    letter-spacing: 2px;
+}
+
 .nav-profile {
     width: 115px;
     min-width: 115px;
