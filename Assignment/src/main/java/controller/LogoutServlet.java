@@ -1,9 +1,11 @@
-package com.prj103.flashcard.controller;
+package controller;
 
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
+
+// File: com.prj103.flashcard.controller.LogoutServlet.java
 
 @WebServlet(name = "logout", urlPatterns = {"/logout"})
 public class LogoutServlet extends HttpServlet {
@@ -12,14 +14,15 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate();
+            session.invalidate(); // Hủy bỏ Session
         }
-        // Xóa cookie userId
+        
+        // Xóa cookie userId (Giữ nguyên)
         Cookie cookie = new Cookie("userId", "");
         cookie.setMaxAge(0);
-        cookie.setPath(request.getContextPath());
+        cookie.setPath(request.getContextPath() + "/"); 
         response.addCookie(cookie);
 
-        response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+        response.sendRedirect(request.getContextPath() + "/index.jsp"); 
     }
 }

@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="model.Card"%> <%-- Đảm bảo import model.Card --%>
+<%@page import="model.Flashcard"%> <%-- Đã thay đổi import từ model.Card sang model.Flashcard --%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +15,8 @@
     <body style="--primary-color: <%= themeColor != null ? themeColor : "#007bff" %>">
         
         <%
-            // Cast về model.Card (NHẤT QUÁN VỚI DECKDAO VÀ DECKSERVLET)
-            Card currentCard = (Card) request.getAttribute("card"); 
+            // Đã thay đổi tên thuộc tính và kiểu cast
+            Flashcard currentFlashcard = (Flashcard) request.getAttribute("flashcardModel"); 
             Integer deckId = (Integer) request.getAttribute("deckId");
             Integer currentNumber = (Integer) request.getAttribute("currentCardNumber");
             Integer totalCards = (Integer) request.getAttribute("totalCards");
@@ -35,15 +35,15 @@
             <main class="flashcard-container">
                 <% if (message != null) { %>
                     <p style="color: red;"><%= message %></p>
-                <% } else if (currentCard != null) { %>
+                <% } else if (currentFlashcard != null) { %>
                     
                     <div class="flashcard" id="flashcard">
                         <div class="card-face card-front">
-                            <p class="japanese-word"><%= currentCard.getFrontContent() %></p>
+                            <p class="japanese-word"><%= currentFlashcard.getJapaneseWord() %></p>
                         </div>
                         <div class="card-face card-back">
-                            <p class="romaji">Mặt sau:</p>
-                            <p class="meaning"><%= currentCard.getBackContent() %></p>
+                            <p class="romaji"><%= currentFlashcard.getRomaji() %></p>
+                            <p class="meaning"><%= currentFlashcard.getVietnameseMeaning() %></p>
                         </div>
                     </div>
                 <% } else { %>

@@ -18,55 +18,60 @@ public class HomePageServlet extends HttpServlet {
         Integer userId = null;
         String username = null;
 
+        // 1. KIỂM TRA SESSION VÀ COOKIE ĐỂ XÁC ĐỊNH TRẠNG THÁI ĐĂNG NHẬP
         if (session != null) {
             userId = (Integer) session.getAttribute("userId");
             username = (String) session.getAttribute("username");
         }
 
-        // Nếu session không có, thử lấy từ cookie
+        // Nếu session không có, thử lấy từ cookie (logic "ghi nhớ đăng nhập")
         if (userId == null) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie c : cookies) {
-                    if ("userId".equals(c.getName())) {
+                    if ("userId".equals(c.getName()) && !c.getValue().isEmpty()) {
                         try {
                             userId = Integer.parseInt(c.getValue());
-                        } catch (NumberFormatException e) {
-                            userId = null;
+                            if (userId != null) {
+                                // Lấy thông tin user từ DB
+                                dal.UserDAO userDAO = new dal.UserDAO();
+                                model.User user = userDAO.getUserById(userId);
+                                username = user.getName();
+                                
+                                // Tạo session mới và lưu lại
+                                session = request.getSession(true);
+                                session.setAttribute("userId", userId);
+                                session.setAttribute("username", username);
+                            }
+                        } catch (Exception e) {
+                            userId = null; // Bỏ qua nếu có lỗi (ví dụ: cookie hỏng, user không tồn tại)
                         }
                         break;
                     }
                 }
             }
-            // Nếu lấy userId từ cookie được, bạn có thể lấy tên user ở đây bằng DB
-            if (userId != null) {
-                // Giả sử có thể lấy user tên như sau:
-                try {
-                    dal.UserDAO userDAO = new dal.UserDAO();
-                    model.User user = userDAO.getUserById(userId);
-                    username = user.getName();
-                    // Lưu lại session để lần sau khỏi đọc cookie
-                    session = request.getSession(true);
-                    session.setAttribute("userId", userId);
-                    session.setAttribute("username", username);
-                } catch (Exception e) {
-                    userId = null;
-                    username = null;
-                }
-            }
         }
 
-        if (userId == null) {
-            // Chưa đăng nhập -> chuyển về trang login
-            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
-            return;
-        }
-
-        CategoryDAO dao = new CategoryDAO();
-        List<Category> list = dao.getCategoriesbyUserId(userId);
+        // 2. XỬ LÝ CHUYỂN HƯỚNG DỰA TRÊN TRẠNG THÁI ĐĂNG NHẬP
         
-        request.setAttribute("category", list);
-        request.setAttribute("username", username);
-        request.getRequestDispatcher("jsp/index.jsp").forward(request, response);
+        if (userId == null) {
+            // TRƯỜNG HỢP 1: CHƯA ĐĂNG NHẬP
+            // Chuyển về trang login
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+            return; // Quan trọng: Dừng xử lý Servlet
+        } else {
+            // TRƯỜNG HỢP 2: ĐÃ ĐĂNG NHẬP
+            
+            // a. Lấy dữ liệu (Category list theo userId)
+            CategoryDAO dao = new CategoryDAO();
+            List<Category> list = dao.getCategoriesbyUserId(userId);
+            
+            // b. Truyền dữ liệu sang JSP
+            request.setAttribute("categoryList", list); // Đặt tên là "categoryList" để dễ phân biệt
+            request.setAttribute("username", username);
+            
+            // c. Forward request đến trang hiển thị danh sách category
+            request.getRequestDispatcher("/jsp/category.jsp").forward(request, response);
+        }
     }
 }

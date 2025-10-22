@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.*, com.prj103.flashcard.model.Deck" %>
+<%@ page import="java.util.*, model.*" %>
 <html>
     <head><title>Decks</title></head>
     <body>

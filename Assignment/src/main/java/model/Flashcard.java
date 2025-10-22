@@ -2,13 +2,13 @@ package model;
 
 public class Flashcard {
     private String word;
-    private String _1stDef;
-    private String _2ndDef;
+    private String romaji;
+    private String viet;
 
     public Flashcard(String japaneseWord, String romaji, String vietnameseMeaning) {
         this.word = japaneseWord;
-        this._1stDef = romaji;
-        this._2ndDef = vietnameseMeaning;
+        this.romaji = romaji;
+        this.viet = vietnameseMeaning;
     }
 
     // Getters and Setters
@@ -21,18 +21,18 @@ public class Flashcard {
     }
 
     public String getRomaji() {
-        return _1stDef;
+        return romaji;
     }
 
     public void setRomaji(String romaji) {
-        this._1stDef = romaji;
+        this.romaji = romaji;
     }
 
     public String getVietnameseMeaning() {
-        return _2ndDef;
+        return viet;
     }
 
     public void setVietnameseMeaning(String vietnameseMeaning) {
-        this._2ndDef = vietnameseMeaning;
+        this.viet = vietnameseMeaning;
     }
 }

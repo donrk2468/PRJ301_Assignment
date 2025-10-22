@@ -1,18 +1,46 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="java.util.*, com.prj103.flashcard.model.Category" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Category" %>
+
+<!DOCTYPE html>
 <html>
-    <head><title>Danh mục</title></head>
+    <head>
+        <title>Danh sách Thẻ của tôi</title>
+    </head>
     <body>
-        <h2>📚 Danh mục thẻ học</h2>
+
+        <%
+            // Lấy username đã truyền từ Servlet (để hiển thị lời chào)
+            String username = (String) request.getAttribute("username"); 
+        
+            // Lấy danh sách Category đã truyền từ Servlet
+            List<Category> categoryList = (List<Category>) request.getAttribute("categoryList");
+        %>
+
+        <h1>Chào mừng, <%= username != null ? username : "Người dùng" %>!</h1>
+        <h2>Thẻ của bạn</h2>
+
+        <%
+            if (categoryList != null && !categoryList.isEmpty()) {
+        %>
         <ul>
-            <%
-                List<Category> list = (List<Category>) request.getAttribute("category");
-                for(Category c : list) {
+            <% 
+                for (Category c : categoryList) {
             %>
-            <li>
+            <p>
                 <a href="category?id=<%=c.getCategoryId()%>"><%=c.getCategoryName()%></a>
-            </li>
-            <% } %>
+            </p>
+            <%
+                }
+            %>
         </ul>
+        <%
+            } else {
+        %>
+        <p>Bạn chưa có bộ thẻ nào. Hãy tạo một bộ thẻ mới để bắt đầu học!</p>
+        <%
+            }
+        %>
+
     </body>
 </html>

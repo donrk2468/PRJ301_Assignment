@@ -9,7 +9,7 @@
 <body>
     <h1>📚 Thư viện học Flashcard</h1>
     <h2>Danh mục (Categories)</h2>
-
+    <p><a href="index.html">Back to homepage</a> </p>
     <ul>
         <%
             List<Category> categories = (List<Category>) request.getAttribute("categories");
