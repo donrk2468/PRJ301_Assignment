@@ -7,6 +7,8 @@
         <meta charset="UTF-8">
         <title>TEAMWORK ASSIGNMENT</title>
         <link rel="stylesheet" href="css/src/indexStyle.css">
+        <link rel="stylesheet" href="css/src/footer.css">
+        <link rel="stylesheet" href="css/src/header.css">
     </head>
     <body>
         <div class="container">
@@ -56,12 +58,17 @@
                     %>
 
                 </div>
-                <div class="banner">
-                    <div class="banner-title">Chào mừng bạn!</div>
-                    <div class="banner-desc">Nhấn vào nút bên dưới để bắt đầu học.</div>
-                    <a class="main-action" href="homePage">Bắt đầu học</a>
-                </div>
             </header>
+            <div class="banner">
+                <div class="banner-title">Chào mừng bạn!</div>
+                <div class="banner-desc">Nhấn vào nút bên dưới để bắt đầu học.</div>
+                <a class="main-action" 
+                   <% if (username != null) { %>
+                   href="CategoryDirect" <% } else {%>
+                   href="jsp/login.jsp"
+                   <% } %>
+                   >Bắt đầu học</a>
+            </div>
             <footer>
                 <div class="footer-container">
                     <div class="footer-column about">

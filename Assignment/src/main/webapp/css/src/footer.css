@@ -1,0 +1,137 @@
+footer {
+    background-color: #f8f9fa; /* Màu nền sáng, sạch sẽ */
+    color: #5a6268; /* Màu chữ xám đậm, dễ đọc */
+    padding: 30px 20px 20px 20px;
+    margin-top: 10%;
+    border-top: 1px solid #dee2e6; /* Đường kẻ mảnh phân tách với nội dung chính */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Font chữ chuyên nghiệp */
+}
+
+/* --- Main Container for Columns --- */
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* --- Individual Column Styling --- */
+.footer-column {
+    flex: 1;
+    min-width: 220px;
+    padding: 0 15px;
+    margin-top: 20px;
+}
+
+/* --- Section Headings (H3, H4) --- */
+.footer-column h3, .footer-column h4 {
+    color: #343a40; /* Màu tiêu đề gần như đen */
+    font-size: 1.1rem;
+    font-weight: 600; /* In đậm vừa phải */
+    margin-bottom: 20px;
+    text-transform: uppercase; /* VIẾT HOA tiêu đề */
+    letter-spacing: 0.5px; /* Tăng nhẹ khoảng cách ký tự */
+}
+
+/* --- Paragraphs and Icons --- */
+.footer-column p {
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.footer-column p i {
+    color: #007bff; /* Màu xanh dương làm điểm nhấn cho icon */
+    margin-right: 10px;
+    width: 20px; /* Căn chỉnh các icon thẳng hàng */
+}
+
+/* --- Quick Links Section --- */
+.footer-column.links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column.links ul li a {
+    color: #5a6268;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.footer-column.links ul li a:hover {
+    color: #0056b3; /* Màu xanh đậm hơn khi di chuột */
+    padding-left: 5px; /* Tạo hiệu ứng thụt vào nhẹ */
+}
+
+/* --- Social Media Icons --- */
+.social-icons .social-icon {
+    display: inline-block;
+    width: 38px;
+    height: 38px;
+    background-color: transparent;
+    color: #5a6268;
+    border: 1px solid #ced4da;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px; /* Căn icon vào giữa */
+    margin-right: 8px;
+    transition: all 0.2s ease-in-out;
+}
+
+.social-icons .social-icon:hover {
+    background-color: #007bff;
+    color: #ffffff;
+    border-color: #007bff;
+}
+
+/* --- Newsletter Form --- */
+.newsletter-title {
+    margin-top: 25px;
+}
+
+.newsletter-form {
+    display: flex;
+    margin-top: 15px;
+}
+
+.newsletter-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px 0 0 4px;
+    transition: border-color 0.2s;
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.newsletter-form button {
+    padding: 10px 20px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.2s;
+    white-space: nowrap; /* Đảm bảo chữ không bị xuống dòng */
+}
+
+.newsletter-form button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* --- Bottom Bar (Copyright) --- */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 25px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d; /* Màu xám nhạt hơn */
+    /*font-size: 0.9rem;*/
+}

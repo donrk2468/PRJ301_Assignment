@@ -71,7 +71,7 @@ public class HomePageServlet extends HttpServlet {
             request.setAttribute("username", username);
             
             // c. Forward request đến trang hiển thị danh sách category
-            request.getRequestDispatcher("/jsp/category.jsp").forward(request, response);
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
     }
 }

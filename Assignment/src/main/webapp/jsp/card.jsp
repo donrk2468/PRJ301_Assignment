@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Flashcard Học Tập</title>
-        <link rel="stylesheet" href="css/src/homeStyle.css"/> 
+        <link rel="stylesheet" href="css/src/cardStyle.css"/> 
     </head>
     
     <% 
