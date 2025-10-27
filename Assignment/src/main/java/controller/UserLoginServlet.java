@@ -42,6 +42,7 @@ public class UserLoginServlet extends HttpServlet {
             } else {
                 request.setAttribute("errorMessage", "Sai email hoặc mật khẩu.");
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                
                 return;
             }
         } catch (SQLException ex) {

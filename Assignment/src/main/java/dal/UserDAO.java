@@ -1,7 +1,6 @@
 package dal;
 
 import model.User;
-import model.DBContext;
 import java.sql.*;
 import java.util.*;
 

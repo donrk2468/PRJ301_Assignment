@@ -50,22 +50,35 @@ header {
     border: none;
 }
 
-.nav-login {
-    font-size: 15px;
-    font-weight: 900;
-    color: #22B9C7;
-    padding-right: 20px; 
-    letter-spacing: 2px;
-}
-
 .nav-profile {
-    width: 115px;
+    width: auto;
     min-width: 115px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     height: 54px;
 }
+
+/*.nav-login {
+    font-size: 15px;
+    font-weight: 900;
+    color: #22B9C7;
+    padding-right: 20px; 
+    letter-spacing: 2px;
+    width: 100px;
+}
+
+/*.userName-span {
+    width: auto;
+    padding-right: 10px;
+    color: #22B9C7;
+    font-weight: bold;
+    -webkit-text-stroke-width: 2px;  Độ dày của viền (ví dụ: 2px) 
+    -webkit-text-stroke-color: #0d6efd;
+    text-stroke-width: 2px;
+    text-stroke-color: #0d6efd;
+}*/
+
 .nav-profile img {
     width: 44px;
     height: 44px;
@@ -73,4 +86,44 @@ header {
     object-fit: cover;
     background: transparent;
     display: block;
+}
+/* --- ÁP DỤNG HIỆU ỨNG VIỀN CHO .nav-login --- */
+.nav-login {
+    font-size: 15px;
+    font-weight: 900;
+    color: #22B9C7; /* Màu chữ chính: Xanh ngọc */
+    padding-right: 20px; 
+    letter-spacing: 2px;
+    min-width: 115px;
+    text-align: right;
+
+    /* 🌟 THÊM VIỀN TRẮNG 1PX */
+    text-shadow: 
+        -1px -1px 0 #fff,  /* Trên-Trái */
+         1px -1px 0 #fff,  /* Trên-Phải */
+        -1px 1px 0 #fff,   /* Dưới-Trái */
+         1px 1px 0 #fff;   /* Dưới-Phải */
+}
+
+/* --- ÁP DỤNG HIỆU ỨNG VIỀN CHO .userName-span --- */
+.userName-span {
+    width: auto; 
+    padding-right: 10px;
+    color: #22B9C7; /* Màu chữ chính: Xanh ngọc */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 100%;
+
+    /* 🌟 THÊM VIỀN TRẮNG 1PX */
+    text-shadow: 
+        -1px -1px 0 #fff,  /* Trên-Trái */
+         1px -1px 0 #fff,  /* Trên-Phải */
+        -1px 1px 0 #fff,   /* Dưới-Trái */
+         1px 1px 0 #fff;   /* Dưới-Phải */
+}
+
+.logout-button {
+    
 }

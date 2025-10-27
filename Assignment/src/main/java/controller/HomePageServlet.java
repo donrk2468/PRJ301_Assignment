@@ -68,7 +68,7 @@ public class HomePageServlet extends HttpServlet {
             
             // b. Truyền dữ liệu sang JSP
             request.setAttribute("categoryList", list); // Đặt tên là "categoryList" để dễ phân biệt
-            request.setAttribute("username", username);
+//            request.setAttribute("username", username);
             
             // c. Forward request đến trang hiển thị danh sách category
             request.getRequestDispatcher("/index.jsp").forward(request, response);

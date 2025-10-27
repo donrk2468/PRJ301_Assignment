@@ -15,20 +15,19 @@ public class CategoryDirectServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        // 1. Lấy session, sử dụng getSession(false) là đúng để kiểm tra session hiện tại
         HttpSession session = request.getSession(false);
+        
+        // 2. Kiểm tra NULL SESSION trước tiên
+        if (session == null || session.getAttribute("userId") == null || session.getAttribute("username") == null) {
+            response.sendRedirect(request.getContextPath() + "/jsp/login.jsp");
+            return;
+        }
         int userId = (Integer) session.getAttribute("userId");
-        String username = (String) session.getAttribute("username");
-
-        // a. Lấy dữ liệu (Category list theo userId)
+        String username = (String) session.getAttribute("username"); 
         CategoryDAO dao = new CategoryDAO();
         List<Category> list = dao.getCategoriesbyUserId(userId);
-
-        // b. Truyền dữ liệu sang JSP
         request.setAttribute("categoryList", list);
-        request.setAttribute("username", username);
-
-        // c. Forward request đến trang hiển thị danh sách category
         request.getRequestDispatcher("jsp/category.jsp").forward(request, response);
-
     }
 }

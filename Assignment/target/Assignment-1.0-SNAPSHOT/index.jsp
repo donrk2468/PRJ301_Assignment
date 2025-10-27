@@ -30,12 +30,13 @@
                     <div class="nav-profile">
                         <%
                             // Lấy username từ Request Attribute (được set trong HomePageServlet)
-                            String username = (String) request.getAttribute("username"); 
+                            String username = (String) session.getAttribute("username"); 
         
                             if (username != null) {
                         %>
-                        <span>Xin chào, <%= username %></span>
-                        <a href="logout">Đăng xuất</a>
+                        <a href="logout" class="nav-login">Đăng xuất</a>
+                        <span class="userName-span"><%= username %></span>
+                        <img src="./css/img/index/profile.jpg" alt="alt"/> 
                         <%
                             } else {
                         %>
@@ -43,7 +44,6 @@
                         <%
                             }
                         %>
-                        <img src="./css/img/index/profile.jpg" alt="alt"/> 
                     </div>
                     <%
                         List<Category> categoryList = (List<Category>) request.getAttribute("category");
@@ -62,14 +62,9 @@
             <div class="banner">
                 <div class="banner-title">Chào mừng bạn!</div>
                 <div class="banner-desc">Nhấn vào nút bên dưới để bắt đầu học.</div>
-                <a class="main-action" 
-                   <% if (username != null) { %>
-                   href="CategoryDirect" <% } else {%>
-                   href="jsp/login.jsp"
-                   <% } %>
-                   >Bắt đầu học</a>
+                <a class="main-action" href="CategoryDirect">Bắt đầu học</a>
             </div>
-            <footer>
+            <footer class="footer">
                 <div class="footer-container">
                     <div class="footer-column about">
                         <h3>Flashcard Tiếng Nhật</h3>

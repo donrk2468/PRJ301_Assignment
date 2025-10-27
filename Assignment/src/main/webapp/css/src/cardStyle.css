@@ -1,20 +1,77 @@
 :root {
-    --primary-color: #007bff; /* Màu mặc định, sẽ bị ghi đè bởi inline style */
-    --card-bg: #ffffff;
-    --text-color: #333;
-    --bg-color: #f4f7f9;
-    --border-radius: 15px;
+    --primary-color: #0d6efd;      /* Màu xanh dương chủ đạo */
+    --secondary-color: #6c757d;    /* Màu xám phụ */
+    --success-color: #198754;      /* Màu xanh lá cây thành công */
+    --danger-color: #dc3545;       /* Màu đỏ cho lỗi/cảnh báo */
+    --background-color: #f8f9fa; /* Màu nền chung */
+    --surface-color: #ffffff;    /* Màu của các card, header */
+    --text-color: #212529;         /* Màu chữ chính */
+    --text-color-light: #6c757d;   /* Màu chữ phụ */
+    --border-color: #dee2e6;      /* Màu viền */
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
-    margin: 0;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info span {
+    font-weight: 500;
+}
+
+.main-header {
+    background-color: var(--surface-color);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    border-bottom: 3px solid var(--primary-color);
+    min-width: 100%;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+.main-header .logo {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .app-container {

@@ -1,7 +1,6 @@
 package dal;
 
 import model.Card;
-import model.DBContext;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -23,6 +23,7 @@ public class LogoutServlet extends HttpServlet {
         cookie.setPath(request.getContextPath() + "/"); 
         response.addCookie(cookie);
 
-        response.sendRedirect(request.getContextPath() + "/index.jsp"); 
+//        response.sendRedirect(request.getContextPath() + "/index.jsp"); 
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 }
