@@ -29,6 +29,10 @@ body {
     min-height: 100vh;
 }
 
+body h2 {
+    padding-bottom: 20px;
+}
+
 /* === CẤU TRÚC CHUNG & HEADER === */
 .container {
     width: 90%;

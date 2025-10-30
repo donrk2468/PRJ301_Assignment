@@ -17,6 +17,7 @@
             </div>
         </header>
         <div class="container">
+            <a href="${pageContext.request.contextPath}/homePage" class="back-link">&larr; Quay lại Trang Chủ</a>
             <h2>Chủ đề của bạn</h2>
             <div class="item-grid">
                 <c:forEach var="cat" items="${categoryList}">
