@@ -58,33 +58,3 @@ CREATE TABLE Cards (
 );
 GO
 
--- Bảng History
-CREATE TABLE History (
-    history_id INT IDENTITY PRIMARY KEY,
-    card_id INT NOT NULL,
-    study_date DATETIME DEFAULT GETDATE(),
-    is_correct BIT,
-    FOREIGN KEY (card_id) REFERENCES Cards(card_id) ON DELETE CASCADE
-);
-GO
-
--- Dữ liệu mẫu
-INSERT INTO Users (email, password, name)
-VALUES (N'test@example.com', N'12345', N'Test User');
-
-INSERT INTO Categories (user_id, category_name)
-VALUES (1, N'Tiếng Nhật N5'),
-       (1, N'Tiếng Anh Cơ Bản');
-
-INSERT INTO Decks (category_id, deck_name, description)
-VALUES (1, N'Kanji N5', N'Cơ bản về chữ Hán'),
-       (2, N'English Basics', N'Từ vựng phổ thông');
-
-INSERT INTO Cards (deck_id, front, back, example)
-VALUES (1, N'日', N'Ngày / Mặt trời', N'日本 (Nhật Bản)'),
-       (1, N'月', N'Tháng / Mặt trăng', N'月曜日 (Thứ Hai)'),
-       (2, N'Hello', N'Xin chào', N'Hello world!');
-
-INSERT INTO History (card_id, is_correct)
-VALUES (1, 1), (2, 0);
-GO

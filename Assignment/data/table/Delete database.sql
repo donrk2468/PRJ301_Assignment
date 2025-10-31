@@ -1,0 +1,6 @@
+﻿ALTER DATABASE flashcard_db
+SET SINGLE_USER 
+WITH ROLLBACK IMMEDIATE; 
+
+-- DROP database
+DROP DATABASE flashcard_db;
