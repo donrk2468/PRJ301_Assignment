@@ -41,6 +41,7 @@ public class DeckDAO extends DBContext {
 
         return list;
     }
+
     public List<Card> getCardsByDeckId(int deckId) throws SQLException {
         List<Card> list = new ArrayList<>();
         String sql = "SELECT * FROM Cards WHERE deck_id = ?";
@@ -52,11 +53,39 @@ public class DeckDAO extends DBContext {
                 c.setCardId(rs.getInt("card_id"));
                 c.setFrontContent(rs.getString("front"));
                 c.setBackContent(rs.getString("back"));
+                c.setExample(rs.getString("example"));
                 c.setDeckId(deckId);
                 list.add(c);
             }
         }
         return list;
     }
-    
+
+    public void addDeck(int categoryId, String deckName) throws SQLException {
+        String sql = "INSERT INTO Decks (category_id, deck_name, description) VALUES (?, ?, ?)";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            ps.setString(2, deckName);
+            ps.setString(3, "Mô tả mặc định");
+            ps.executeUpdate();
+        }
+    }
+
+    public void updateDeck(int deckId, String deckName) throws SQLException {
+        String sql = "UPDATE Decks SET deck_name = ? WHERE deck_id = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, deckName);
+            ps.setInt(2, deckId);
+            ps.executeUpdate();
+        }
+    }
+
+    public void deleteDeck(int deckId) throws SQLException {
+        String sql = "DELETE Decks WHERE deck_id = ?";
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, deckId);
+            ps.executeUpdate();
+        }
+    }
+
 }

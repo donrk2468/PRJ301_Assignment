@@ -6,7 +6,6 @@
         <meta charset="UTF-8">
         <title>Các bộ thẻ</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/src/style.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/src/footer.css">        
     </head>
     <body>
         <header class="main-header">
@@ -19,52 +18,54 @@
         <div class="container">
             <a href="${pageContext.request.contextPath}/CategoryDirect" class="back-link">&larr; Quay lại các chủ đề</a>
             <h2>Chọn một bộ thẻ để học</h2>
-            <div class="item-grid">
-                <c:forEach var="d" items="${deck}">
-                    <a href="${pageContext.request.contextPath}/deck?id=${d.deckId}" class="item-card">
-                        <h3>${d.deckName}</h3>
-                    </a>
-                </c:forEach>
+
+            <%-- Sử dụng c:choose để xử lý cả hai trường hợp --%>
+            <c:choose>
+<%-- 1. Trường hợp CÓ deck để hiển thị --%>
+                <c:when test="${not empty deck}">
+                    <div class="item-grid">
+                        <c:forEach var="d" items="${deck}">
+                            <div class="item-card">
+                                 <a href="${pageContext.request.contextPath}/deck?id=${d.deckId}&categoryId=${d.categoryId}" style="text-decoration:none; color:inherit;">
+                                     <h3>${d.deckName}</h3>
+                                 </a>
+                                 <div class="actions">
+                                    <form action="updateDeck" method="post">
+                                        <input type="hidden" name="deckId" value="${d.deckId}">
+                                        <input type="hidden" name="categoryId" value="${d.categoryId}">
+                                        <input type="text" name="deckName" value="${d.deckName}" class="form-control" style="padding: 5px; flex-grow: 1;">
+                                        <button type="submit" class="btn btn-primary" style="padding: 5px 10px;">Lưu</button>
+                                    </form>
+                                    <a href="deleteDeck?id=${d.deckId}&categoryId=${d.categoryId}" 
+                                       onclick="return confirm('Bạn có chắc muốn xóa bộ thẻ này?');" 
+                                       class="btn btn-danger" style="padding: 5px 10px;">
+                                        Xóa
+                                    </a>
+                                 </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </c:when>
+                <%-- 2. Trường hợp KHÔNG có deck nào (rỗng) --%>
+                <c:otherwise>
+                    <p style="padding: 2rem; background-color: #e9ecef; border-radius: 8px; text-align: center;">
+                        Chủ đề này chưa có bộ thẻ nào. Hãy tạo một bộ thẻ mới bên dưới!
+                    </p>
+                </c:otherwise>
+            </c:choose>
+
+            <%-- Form thêm mới LUÔN LUÔN hiển thị --%>
+            <div class="form-container">
+                <h3>Thêm bộ thẻ mới</h3>
+                <form action="addDeck" method="post" class="form-inline">
+                    <%-- Lấy categoryId từ request attribute mà Servlet đã gửi qua --%>
+                    <input type="hidden" name="categoryId" value="${categoryId}">
+                    <div class="form-group">
+                        <input type="text" name="deckName" class="form-control" placeholder="Tên bộ thẻ mới" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </form>
             </div>
         </div>
-        <footer class="footer">
-            <div class="footer-container">
-                <div class="footer-column about">
-                    <h3>Flashcard Tiếng Nhật</h3>
-                    <p>Nền tảng giúp bạn học từ vựng tiếng Nhật hiệu quả thông qua các bộ thẻ ghi nhớ thông minh.</p>
-                    <p><i class="fa fa-map-marker-alt"></i> Địa chỉ: Hà Nội, Việt Nam</p>
-                    <!--<p><i class="fa fa-phone"></i> Điện thoại: </p>-->
-                    <p><i class="fa fa-envelope"></i> Email: steamactive123@gmail.com</p>
-                </div>
-
-                <div class="footer-column links">
-                    <h3>Liên kết nhanh</h3>
-                    <ul>
-                        <li><a href="#">Về chúng tôi</a></li>
-                        <li><a href="#">Câu hỏi thường gặp (FAQ)</a></li>
-                        <li><a href="#">Chính sách bảo mật</a></li>
-                        <li><a href="#">Điều khoản dịch vụ</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column social">
-                    <h3>Kết nối với chúng tôi</h3>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    </div>
-                    <h4 class="newsletter-title">Đăng ký nhận tin</h4>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Nhập email của bạn...">
-                        <button type="submit">Đăng ký</button>
-                    </form>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 Flashcard Tiếng Nhật. Mọi quyền được bảo lưu.</p>
-            </div>
-        </footer>
-    </div>
-</body>
+    </body>
 </html>

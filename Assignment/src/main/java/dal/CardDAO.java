@@ -18,18 +18,19 @@ public class CardDAO {
 
     public List<Card> getCardsByDeck(int deckId) {
         List<Card> list = new ArrayList<>();
-        String sql = "SELECT card_id, deck_id, front_content, back_content, created_at FROM Cards WHERE deck_id = ?";
+        String sql = "SELECT card_id, deck_id, front, back, example FROM Cards WHERE deck_id = ?";
         try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, deckId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int cardId = rs.getInt("card_id");
-                    String front = rs.getString("front_content");
-                    String back = rs.getString("back_content");
-                    Timestamp ts = rs.getTimestamp("created_at");
-                    Date created = ts != null ? new Date(ts.getTime()) : null;
-                    list.add(new Card(cardId, deckId, front, back, created));
+                    String front = rs.getString("front");
+                    String back = rs.getString("back");
+                    String example = rs.getString("example");
+//                    Timestamp ts = rs.getTimestamp("created_at");
+//                    Date created = ts != null ? new Date(ts.getTime()) : null;
+                    list.add(new Card(cardId, deckId, front, back, example));
                 }
             }
         } catch (SQLException e) {
@@ -39,18 +40,17 @@ public class CardDAO {
     }
 
     public Card getCardById(int cardId) {
-        String sql = "SELECT card_id, deck_id, front_content, back_content, created_at FROM Cards WHERE card_id = ?";
+        String sql = "SELECT card_id, deck_id, front, back, example FROM Cards WHERE card_id = ?";
         try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, cardId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     int deckId = rs.getInt("deck_id");
-                    String front = rs.getString("front_content");
-                    String back = rs.getString("back_content");
-                    Timestamp ts = rs.getTimestamp("created_at");
-                    Date created = ts != null ? new Date(ts.getTime()) : null;
-                    return new Card(cardId, deckId, front, back, created);
+                    String front = rs.getString("front");
+                    String back = rs.getString("back");
+                    String example = rs.getString("example");
+                    return new Card(cardId, deckId, front, back, example);
                 }
             }
         } catch (SQLException e) {
@@ -60,12 +60,13 @@ public class CardDAO {
     }
 
     public int insertCard(Card card) {
-        String sql = "INSERT INTO Cards (deck_id, front_content, back_content, created_at) VALUES (?, ?, ?, GETDATE())";
+        String sql = "INSERT INTO Cards (deck_id, front, back, example) VALUES (?, ?, ?, ?)";
         try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, card.getDeckId());
             ps.setString(2, card.getFrontContent());
             ps.setString(3, card.getBackContent());
+            ps.setString(4, card.getExample());
             int affected = ps.executeUpdate();
             if (affected == 0) return -1;
             try (ResultSet keys = ps.getGeneratedKeys()) {
@@ -80,12 +81,13 @@ public class CardDAO {
     }
 
     public boolean updateCard(Card card) {
-        String sql = "UPDATE Cards SET front_content = ?, back_content = ? WHERE card_id = ?";
+        String sql = "UPDATE Cards SET front = ?, back = ?, example = ? WHERE card_id = ?";
         try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, card.getFrontContent());
             ps.setString(2, card.getBackContent());
-            ps.setInt(3, card.getCardId());
+            ps.setString(3, card.getExample());
+            ps.setInt(4, card.getCardId());
             int affected = ps.executeUpdate();
             return affected > 0;
         } catch (SQLException e) {
@@ -108,18 +110,17 @@ public class CardDAO {
     }
 
     public Card getRandomCardInDeck(int deckId) {
-        String sql = "SELECT TOP 1 card_id, deck_id, front_content, back_content, created_at FROM Cards WHERE deck_id = ? ORDER BY NEWID()";
+        String sql = "SELECT TOP 1 card_id, deck_id, front, back, example FROM Cards WHERE deck_id = ? ORDER BY NEWID()";
         try (Connection conn = db.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, deckId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     int cardId = rs.getInt("card_id");
-                    String front = rs.getString("front_content");
-                    String back = rs.getString("back_content");
-                    Timestamp ts = rs.getTimestamp("created_at");
-                    Date created = ts != null ? new Date(ts.getTime()) : null;
-                    return new Card(cardId, deckId, front, back, created);
+                    String front = rs.getString("front");
+                    String back = rs.getString("back");
+                    String example = rs.getString("example");
+                    return new Card(cardId, deckId, front, back, example);
                 }
             }
         } catch (SQLException e) {

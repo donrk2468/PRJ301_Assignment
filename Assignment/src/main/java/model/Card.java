@@ -1,28 +1,29 @@
 package model;
-
-import java.util.Date;
+//
+//import java.util.Date;
 
 public class Card {
     private int cardId;
     private int deckId;
     private String frontContent;
     private String backContent;
-    private Date createdAt;
+    private String example;
 
     public Card() {}
 
-    public Card(int cardId, int deckId, String frontContent, String backContent, Date createdAt) {
+    public Card(int cardId, int deckId, String frontContent, String backContent, String createdAt) {
         this.cardId = cardId;
         this.deckId = deckId;
         this.frontContent = frontContent;
         this.backContent = backContent;
-        this.createdAt = createdAt;
+        this.example = createdAt;
     }
 
-    public Card(int deckId, String frontContent, String backContent) {
+    public Card(int deckId, String frontContent, String backContent, String example) {
         this.deckId = deckId;
         this.frontContent = frontContent;
         this.backContent = backContent;
+        this.example = example;
     }
 
     // Getters & setters
@@ -38,6 +39,6 @@ public class Card {
     public String getBackContent() { return backContent; }
     public void setBackContent(String backContent) { this.backContent = backContent; }
 
-    public Date getCreatedAt() { return createdAt; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
+    public String getExample() { return example; }
+    public void setExample(String example) { this.example = example; }
 }
