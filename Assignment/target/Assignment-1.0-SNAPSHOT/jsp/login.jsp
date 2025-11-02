@@ -17,14 +17,18 @@
                 </c:if>
                 <form action="${pageContext.request.contextPath}/login2" method="POST">
                     <div class="form-group">
-                        <input type="email" name="email" placeholder="Email" required value="user1@example.com">
+                        <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" placeholder="Mật khẩu" required value="pass1">
+                        <input type="password" name="password" placeholder="Mật khẩu" required>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width:100%;">Đăng nhập</button>
                 </form>
             </div>
+            <div style="margin-top: 20px;">
+                Chưa có tài khoản?
+            </div>
+            <a class="btn btn-primary register-button" href="register.jsp">Đăng ký ngay</a>
         </div>
         <footer class="footer">
             <div class="footer-container">

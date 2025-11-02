@@ -51,5 +51,31 @@ public class UserDAO extends DBContext {
         }
         return null; // nếu không tìm thấy user
     }
-
+    
+    public boolean isEmailExisted(String email) throws SQLException {
+        String sql = "SELECT email FROM Users WHERE email = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return false;
+                }
+            }
+        }
+        return true; // nếu không tìm thấy user
+    }
+    
+    public User register(String email, String password, String name) throws SQLException {
+        if (isEmailExisted(email)) {
+            String sql = "INSERT INTO Users(email, password, name) VALUES(?, ?, ?)";
+            try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+                ps.setString(1, email);
+                ps.setString(2, password);
+                ps.setString(3, name);
+                ps.executeUpdate();
+            }
+        }
+        
+        return null;
+    }
 }

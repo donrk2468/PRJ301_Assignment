@@ -41,6 +41,7 @@
                             } else {
                         %>
                         <a class="nav-login" href="jsp/login.jsp">Login</a>
+                        <a class="nav-login" href="jsp/register.jsp">Register</a>
                         <%
                             }
                         %>

@@ -25,4 +25,5 @@ controller\DeckServlet.class
 model\Category.class
 controller\LogoutServlet.class
 model\Card.class
+controller\RegisterServlet.class
 controller\DeleteCategoryServlet.class
