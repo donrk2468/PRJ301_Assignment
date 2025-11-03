@@ -9,10 +9,7 @@ import jakarta.servlet.http.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Card;
-import model.User;
 
-// AddCardServlet.java
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
     @Override
@@ -23,13 +20,15 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         UserDAO dao = new UserDAO();
         try {
-            User u = dao.register(email, password, name);
-            if (u == null) {
+            boolean success = dao.register(email, password, name);
+            if (success) {
                 request.setAttribute("errorMessage", "Entered email has been registered!");
                 request.getRequestDispatcher("jsp/register.jsp").forward(request, response);
             } else {
                 request.setAttribute("errorMessage", "");
-                response.sendRedirect("login2");
+                request.setAttribute("email",email);
+                request.setAttribute("password",password);
+                request.getRequestDispatcher("login2").forward(request, response);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);

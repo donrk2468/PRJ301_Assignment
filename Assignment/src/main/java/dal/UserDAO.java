@@ -65,7 +65,7 @@ public class UserDAO extends DBContext {
         return true; // nếu không tìm thấy user
     }
     
-    public User register(String email, String password, String name) throws SQLException {
+    public boolean register(String email, String password, String name) throws SQLException {
         if (isEmailExisted(email)) {
             String sql = "INSERT INTO Users(email, password, name) VALUES(?, ?, ?)";
             try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
@@ -73,9 +73,10 @@ public class UserDAO extends DBContext {
                 ps.setString(2, password);
                 ps.setString(3, name);
                 ps.executeUpdate();
+                return true;
             }
         }
         
-        return null;
+        return false;
     }
 }

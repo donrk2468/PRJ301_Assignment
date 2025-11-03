@@ -32,6 +32,45 @@ body {
 body h2 {
     padding-bottom: 20px;
 }
+/* Đảm bảo item-card được định dạng rõ ràng */
+.item-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 1. STYLES CHO INPUT BÌNH THƯỜNG (khi readonly) */
+.category-name-input {
+    /* Bỏ viền và nền */
+    border: none;
+    background: transparent;
+    
+    /* Làm chữ to và đậm hơn, giống H3 */
+    font-size: 1.5em; /* Tương đương kích thước h3 */
+    font-weight: bold; 
+    color: #333;
+    
+    /* Đảm bảo nó chiếm đủ chiều rộng */
+    width: 100%; 
+    padding: 0;
+    margin-bottom: 5px;
+    
+    /* Đảm bảo con trỏ là con trỏ văn bản khi không sửa */
+    cursor: text;
+}
+
+/* 2. STYLES CHO INPUT KHI CÓ THỂ CHỈNH SỬA */
+.category-name-input:not([readonly]) {
+    /* Thêm lại viền và nền khi có thể sửa */
+    border-bottom: 2px solid #007bff; /* Ví dụ: gạch chân màu xanh */
+    background-color: #f9f9f9;
+    padding-bottom: 2px;
+    
+    /* Đổi con trỏ thành con trỏ I-beam tiêu chuẩn */
+    cursor: text;
+}
 
 /* === CẤU TRÚC CHUNG & HEADER === */
 .container {
@@ -121,6 +160,11 @@ body h2 {
     margin-bottom: 1rem;
 }
 
+.form-inline {
+    display: flex;
+    flex-direction: column;
+}
+
 /* === TRANG DASHBOARD (category.jsp / deck.jsp) === */
 .dashboard-header {
     margin-bottom: 2rem;
@@ -143,7 +187,7 @@ body h2 {
     text-decoration: none;
     color: var(--text-color);
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     justify-content: space-between;
 }
 
@@ -276,3 +320,8 @@ body h2 {
 .register-button {
     margin-top: 5px;   
 }
+
+.change-submit-button {
+    
+}
+
