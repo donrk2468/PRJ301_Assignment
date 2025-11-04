@@ -1,4 +1,3 @@
-/* === BIẾN TOÀN CỤC VÀ THIẾT LẬP CƠ BẢN === */
 :root {
     --primary-color: #0d6efd;      /* Màu xanh dương chủ đạo */
     --secondary-color: #6c757d;    /* Màu xám phụ */
@@ -27,75 +26,16 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-body h2 {
-    padding-bottom: 20px;
-}
-/* Đảm bảo item-card được định dạng rõ ràng */
-.item-card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-/* 1. STYLES CHO INPUT BÌNH THƯỜNG (khi readonly) */
-.category-name-input {
-    /* Bỏ viền và nền */
-    border: none;
-    background: transparent;
-    
-    /* Làm chữ to và đậm hơn, giống H3 */
-    font-size: 1.5em; /* Tương đương kích thước h3 */
-    font-weight: bold; 
-    color: #333;
-    
-    /* Đảm bảo nó chiếm đủ chiều rộng */
-    width: 100%; 
-    padding: 0;
-    margin-bottom: 5px;
-    
-    /* Đảm bảo con trỏ là con trỏ văn bản khi không sửa */
-    cursor: text;
-}
-
-/* 2. STYLES CHO INPUT KHI CÓ THỂ CHỈNH SỬA */
-.category-name-input:not([readonly]) {
-    /* Thêm lại viền và nền khi có thể sửa */
-    border-bottom: 2px solid #007bff; /* Ví dụ: gạch chân màu xanh */
-    background-color: #f9f9f9;
-    padding-bottom: 2px;
-    
-    /* Đổi con trỏ thành con trỏ I-beam tiêu chuẩn */
-    cursor: text;
-}
-
-/* === CẤU TRÚC CHUNG & HEADER === */
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    flex-grow: 1;
-}
-
-.main-header {
-    background-color: var(--surface-color);
-    padding: 1rem 2rem;
-    box-shadow: var(--shadow);
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid var(--primary-color);
 }
 
-.main-header .logo {
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
     color: var(--primary-color);
-    font-size: 1.5rem;
-    font-weight: bold;
     text-decoration: none;
+    font-weight: 500;
 }
 
 .user-info {
@@ -108,138 +48,106 @@ body h2 {
     font-weight: 500;
 }
 
-/* === TRANG ĐĂNG NHẬP (login.jsp) === */
-.login-container {
+.main-header {
+    background-color: var(--surface-color);
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    flex-direction: column;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    border-bottom: 3px solid var(--primary-color);
+    min-width: 100%;
 }
 
-.login-form {
-    background: var(--surface-color);
-    padding: 2.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    max-width: 400px;
+    flex-grow: 1;
+}
+
+.main-header .logo {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.app-container {
+    margin-top: 50px;
+    width: 90%;
+    max-width: 500px;
+    background: var(--card-bg);
+    padding: 2em;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.login-form h1 {
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 0.8rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-.error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-    padding: 0.8rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.form-inline {
+.app-header {
+    margin-bottom: 2em;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 1em;
     display: flex;
-    flex-direction: column;
-}
-
-/* === TRANG DASHBOARD (category.jsp / deck.jsp) === */
-.dashboard-header {
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-}
-
-.item-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.item-card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 1.5rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-decoration: none;
-    color: var(--text-color);
-    display: flex;
-    /*flex-direction: column;*/
     justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.item-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-}
-
-.item-card h3 {
+.app-header h1 {
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
+    margin: 0 0 10px 0;
+    width: 100%;
 }
 
-.item-card p {
-    color: var(--text-color-light);
-    font-size: 0.9rem;
-}
-
-.back-link {
-    display: inline-block;
-    margin-bottom: 1.5rem;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-}
-
-/* === TRANG HỌC (card.jsp) === */
-.study-container {
-    max-width: 700px;
-    margin: 2rem auto;
+.controls {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
     align-items: center;
 }
 
-.flashcard-scene {
-    width: 100%;
-    height: 350px;
-    perspective: 1500px;
+.language-switcher a {
+    text-decoration: none;
+    color: #888;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.language-switcher a.active {
+    color: var(--primary-color);
+}
+
+.theme-selector label {
+    margin-right: 10px;
+    color: var(--text-color);
+}
+
+input[type="color"] {
+    border: none;
+    background: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.flashcard-container {
+    perspective: 1000px; /* For 3D effect */
+    margin-bottom: 2em;
 }
 
 .flashcard {
     width: 100%;
-    height: 100%;
+    height: 250px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transition: transform 0.6s;
     cursor: pointer;
 }
 
 .flashcard.is-flipped {
-    transform: rotateY(180deg);
+    transform: rotateX(180deg);
 }
 
 .card-face {
@@ -251,77 +159,48 @@ body h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    font-size: 2.2rem;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    /* Giữ lại font-size cơ bản để nội dung không bị quá nhỏ */
+    font-size: 2.2rem;
+    padding: 2rem;
 }
 
-.card-face-front {
-    background-color: var(--surface-color);
-}
-
-.card-face-back {
+.card-front {
     background-color: var(--primary-color);
     color: white;
-    transform: rotateY(180deg);
 }
 
-.card-example {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    opacity: 0.8;
+.card-back {
+    background-color: #e9ecef;
+    color: var(--text-color);
+    transform: rotateX(180deg);
 }
 
-.study-controls {
+/* -------------------------------------- */
+/* ĐÃ XÓA CÁC STYLE RIÊNG CHO NỘI DUNG */
+/* (japanese-word, romaji, meaning) */
+/* -------------------------------------- */
+
+.app-footer {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    width: 100%;
+    justify-content: space-around;
 }
 
-.card-counter {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--text-color-light);
-}
-
-/* === NÚT BẤM CHUNG === */
-.btn {
-    padding: 0.8rem 1.8rem;
+.action-btn {
+    padding: 12px 25px;
     border: none;
-    border-radius: 50px;
-    font-size: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1em;
     font-weight: bold;
+    border-radius: 50px;
     cursor: pointer;
     text-decoration: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
+.action-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
 }
-.btn-primary:hover {
-    opacity: 0.85;
-}
-
-.btn-danger {
-    background-color: var(--danger-color);
-    color: white;
-}
-
-.register-button {
-    margin-top: 5px;   
-}
-
-.change-submit-button {
-    
-}
-

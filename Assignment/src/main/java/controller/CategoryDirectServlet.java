@@ -17,6 +17,7 @@ public class CategoryDirectServlet extends HttpServlet {
         
         // 1. Lấy session, sử dụng getSession(false) là đúng để kiểm tra session hiện tại
         HttpSession session = request.getSession(false);
+        String categoryId = (String) request.getAttribute("categoryId");
         
         // 2. Kiểm tra NULL SESSION trước tiên
         if (session == null || session.getAttribute("userId") == null || session.getAttribute("username") == null) {
@@ -28,6 +29,7 @@ public class CategoryDirectServlet extends HttpServlet {
         CategoryDAO dao = new CategoryDAO();
         List<Category> list = dao.getCategoriesbyUserId(userId);
         request.setAttribute("categoryList", list);
+        request.setAttribute("categoryId", categoryId);
         request.getRequestDispatcher("jsp/category.jsp").forward(request, response);
     }
 }

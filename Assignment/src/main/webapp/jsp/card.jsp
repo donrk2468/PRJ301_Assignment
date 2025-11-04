@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>Học Flashcard</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/src/cardStyle.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/src/style.css">
 </head>
 <body style="--primary-color: ${not empty themeColor ? themeColor : '#0d6efd'}">
     <header class="main-header">
