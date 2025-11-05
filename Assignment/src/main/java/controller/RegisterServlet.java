@@ -18,17 +18,17 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
+        String errorMessage = null;
         UserDAO dao = new UserDAO();
         try {
             boolean success = dao.register(email, password, name);
             if (success) {
-                request.setAttribute("errorMessage", "Entered email has been registered!");
-                request.getRequestDispatcher("jsp/register.jsp").forward(request, response);
-            } else {
-                request.setAttribute("errorMessage", "");
                 request.setAttribute("email",email);
                 request.setAttribute("password",password);
                 request.getRequestDispatcher("login2").forward(request, response);
+            } else {
+                request.setAttribute("errorMessage", "Entered email has been registered!");
+                request.getRequestDispatcher("jsp/register.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
