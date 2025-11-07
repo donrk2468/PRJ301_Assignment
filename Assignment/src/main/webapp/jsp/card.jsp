@@ -21,12 +21,11 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                /* Cần đảm bảo style này được định nghĩa trong cardStyle.css hoặc manage-deck.css để căn logo trái, controls phải */
             }
             .header-controls {
                 display: flex;
                 align-items: center;
-                gap: 15px; /* Khoảng cách giữa nút Quay lại và User Info */
+                gap: 15px; 
             }
             .user-info {
                 display: flex;
@@ -48,7 +47,7 @@
                 word-wrap: break-word;
             }
             .example-container {
-                margin: 2rem auto; /* Dùng auto để căn giữa */
+                margin: 2rem auto; 
                 text-align: center;
                 font-size: 1.25rem;
                 color: #495057;
@@ -56,7 +55,6 @@
                 line-height: 1.5;
                 max-width: 80%;
             }
-            /* ... Giữ nguyên style cho form ... */
             .form-label-custom {
                 font-weight: 600;
                 margin-bottom: 0.5rem;
@@ -76,7 +74,6 @@
                 outline: none;
                 border-color: var(--primary-color);
             }
-             /* Style cho thông báo khi không có thẻ */
             .no-card-message {
                 font-size: 1.5rem;
                 padding: 2rem;
@@ -91,6 +88,7 @@
                 <a href="${pageContext.request.contextPath}/homePage" class="logo">Flashcard</a>
                 
                 <div class="header-controls">
+                    <!-- SỬA: Lấy categoryId từ Session Scope -->
                     <a href="${pageContext.request.contextPath}/category" class="back-link" style="margin: 0;">&larr; Quay lại</a>
                     
                     <div class="user-info">
@@ -151,7 +149,8 @@
                 </h3>
                 <form action="updateCard" method="post" style="display: flex; flex-direction: column; gap: 1.2rem;">
                     <input type="hidden" name="cardId" value="${card.cardId}">
-                    <input type="hidden" name="deckId" value="${card.deckId}">
+                    <!-- SỬA: Lấy deckId từ Session Scope -->
+                    <input type="hidden" name="deckId" value="${sessionScope.currentDeckId}"> 
 
                     <div style="text-align: left;">
                         <label for="front" class="form-label-custom">Mặt trước (Thuật ngữ)</label>
@@ -176,7 +175,8 @@
         </c:if>
 
         <div style="margin: 3rem 0; text-align: center;">
-            <a href="manageDeck?id=${deckId}&categoryId=${categoryId}" class="action-btn" style="background-color: #198754; padding: 12px 30px; font-size: 1.1rem;">
+            <!-- SỬA: Lấy deckId và categoryId từ Session Scope -->
+            <a href="manageDeck?id=${sessionScope.currentDeckId}" class="action-btn" style="background-color: #198754; padding: 12px 30px; font-size: 1.1rem;">
                 Quản lý toàn bộ bộ thẻ
             </a>
         </div>

@@ -28,7 +28,8 @@
 
                                     <form action="updateDeck" method="post" class="update-form" style="display:flex; flex-direction: column; width: 100%;">
                                         <input type="hidden" name="deckId" value="${d.deckId}"/>
-                                        <input type="hidden" name="categoryId" value="${d.categoryId}"/>
+                                        <!-- Giữ nguyên categoryId trong form để đảm bảo logic update -->
+                                        <input type="hidden" name="categoryId" value="${d.categoryId}"/> 
 
                                         <input type="text"
                                                name="deckName"
@@ -54,7 +55,8 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <a href="${pageContext.request.contextPath}/deck?id=${d.deckId}&categoryId=${d.categoryId}"
+                                    <!-- SỬA: Chỉ truyền deckId, CategoryId đã được lưu trong Session khi truy cập trang này -->
+                                    <a href="${pageContext.request.contextPath}/deck?id=${d.deckId}"
                                        class="btn btn-primary btn-success toggle-button" 
                                        style="padding: 5px 10px; margin-top: 10px; background: #0d6efd;">
                                         Truy Cập
@@ -68,7 +70,7 @@
                                 </div>
                             </div>
                         </c:forEach>
-                    </div>  
+                    </div>
                 </c:when>
                 <c:otherwise>
                     <p style="padding: 2rem; background-color: #e9ecef; border-radius: 8px; text-align: center;">Chủ đề này chưa có bộ thẻ nào. Hãy tạo một bộ thẻ mới bên dưới!</p>
@@ -78,7 +80,8 @@
             <div class="form-container">
                 <h3>Thêm bộ thẻ mới</h3>
                 <form action="addDeck" method="post" class="form-inline">
-                    <input type="hidden" name="categoryId" value="${categoryId}">
+                    <!-- SỬA: Lấy categoryId từ Session Scope -->
+                    <input type="hidden" name="categoryId" value="${sessionScope.categoryId}">
                     <div class="form-group">
                         <input type="text" name="deckName" class="form-control" placeholder="Tên bộ thẻ mới" required>
                     </div>
@@ -110,7 +113,7 @@
                 // Kích hoạt sửa
                 inputName.removeAttribute('readonly');
                 inputName.focus();
-                return; // Dừng lại, không xử lý chuyển hướng
+                return; 
             }
 
             // --- 2. XỬ LÝ NÚT HỦY (.btn-huy) ---
@@ -130,33 +133,27 @@
                 btnLuu.style.display = 'none';
                 btnHuy.style.display = 'none';
                 inputName.setAttribute('readonly', 'readonly');
-                event.preventDefault(); // Ngăn hành vi submit form nếu có
-                return; // Dừng lại, không xử lý chuyển hướng
+                event.preventDefault(); 
+                return; 
             }
 
             // --- 3. XỬ LÝ CHUYỂN HƯỚNG KHI NHẤP VÀO CARD ---
 
-            // Tìm thẻ item-card gần nhất từ điểm click
             const card = event.target.closest('.category-card');
 
-            // Kiểm tra xem click có xảy ra trên các phần tử tương tác không
             const isInteractive = event.target.closest('.actions') ||
                     event.target.closest('.update-form') ||
                     event.target.closest('.delete-link');
 
-            // Nếu click trúng vào card VÀ KHÔNG trúng vào các phần tử tương tác
             if (card && !isInteractive) {
-                // Lấy ID bộ thẻ (deckId) và Category ID
                 const deckId = card.getAttribute('data-deck-id');
-                const categoryId = card.getAttribute('data-category-id');
                 const inputElement = card.querySelector('.category-name-input');
 
-                // CHỈ CHUYỂN HƯỚNG NẾU KHÔNG Ở CHẾ ĐỘ SỬA (input là readonly)
-                if (deckId && categoryId && inputElement && inputElement.hasAttribute('readonly')) {
-                    // Chuyển hướng đến trang chi tiết bộ thẻ
-                    window.location.href = `${contextPath}/deck?id=${deckId}&categoryId=${categoryId}`;
-                                }
-                            }
-                        });
+                if (deckId && inputElement && inputElement.hasAttribute('readonly')) {
+                    // SỬA: Chỉ truyền deckId, categoryId sẽ được lấy từ Session
+                    window.location.href = `${contextPath}/deck?id=${deckId}`;
+                }
+            }
+        });
     </script>
 </html>

@@ -22,15 +22,13 @@ public class DeckServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
 
-        // 1. LẤY ID TỪ REQUEST & SESSION
-
+        // Lấy deckId và categoryId từ Session (dùng cho JSP/URL)
         String deckIdParam = request.getParameter("id");
-        // currentDeckId được lưu là Integer
         Integer deckId = (Integer) session.getAttribute("currentDeckId");
         
-        // categoryId cũng được lưu là Integer, cần chuyển sang String an toàn cho JSP
+        // Cần lấy categoryId để đảm bảo Session có giá trị cho nút quay lại
         Integer categoryIdObj = (Integer) session.getAttribute("categoryId");
-        String categoryId = (categoryIdObj != null) ? String.valueOf(categoryIdObj) : null;
+        // Không cần chuyển thành String ở đây vì JSP sẽ dùng ${sessionScope.categoryId}
         
         
         // 2. XỬ LÝ deckId TỪ PARAMETER
@@ -38,14 +36,12 @@ public class DeckServlet extends HttpServlet {
             try {
                 int newDeckId = Integer.parseInt(deckIdParam);
                 
-                // Nếu là Deck mới, hoặc lần đầu truy cập, reset index thẻ
                 if (deckId == null || newDeckId != deckId) {
                     deckId = newDeckId;
                     session.setAttribute("currentDeckId", deckId);
                     session.setAttribute("cardIndex", 0); 
                 }
             } catch (NumberFormatException e) {
-                // Nếu tham số deckId không phải số
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tham số deckId không hợp lệ.");
                 return;
             }
@@ -53,7 +49,6 @@ public class DeckServlet extends HttpServlet {
 
         // 3. KIỂM TRA TÍNH HỢP LỆ CỦA deckId
         if (deckId == null) {
-            // Nếu không có deckId trong cả request lẫn session, chuyển về trang chủ
             response.sendRedirect(request.getContextPath() + "/homePage");
             return;
         }
@@ -71,14 +66,12 @@ public class DeckServlet extends HttpServlet {
         
         // 5. XỬ LÝ LOGIC HIỂN THỊ THẺ
         if (cards.isEmpty()) {
-            // Nếu không có thẻ nào
             request.setAttribute("message", "Bộ thẻ này hiện chưa có thẻ nào. Hãy thêm thẻ mới!");
-            request.setAttribute("deckId", deckId);
+            request.setAttribute("deckId", deckId); // Giữ lại deckId trong Request cho Form thêm thẻ
             request.setAttribute("currentCardNumber", 0);
             request.setAttribute("totalCards", 0);
             request.setAttribute("card", null);
         } else {
-            // Nếu có thẻ, xử lý chuyển tiếp (next/prev)
             Integer cardIndex = (Integer) session.getAttribute("cardIndex");
             if (cardIndex == null || cardIndex < 0 || cardIndex >= cards.size()) { 
                 cardIndex = 0;
@@ -93,16 +86,16 @@ public class DeckServlet extends HttpServlet {
             
             session.setAttribute("cardIndex", cardIndex);
             
+            // CHỈ TRUYỀN CÁC BIẾN CẦN THIẾT HOẶC BIẾN DỮ LIỆU ĐỘNG (Request Scope)
             request.setAttribute("card", cards.get(cardIndex));
-            request.setAttribute("deckId", deckId);
             request.setAttribute("currentCardNumber", cardIndex + 1);
             request.setAttribute("totalCards", cards.size());
+            request.setAttribute("deckId", deckId); // Giữ lại để dùng trong form/liên kết
+            
+            // KHÔNG CẦN request.setAttribute("categoryId", categoryId) NỮA
         }
         
         // 6. CHUYỂN TIẾP ĐẾN JSP
-        // Truyền categoryId (String đã xử lý) vào Request Scope cho JSP sử dụng
-        request.setAttribute("categoryId", categoryId); 
-        
         request.getRequestDispatcher("/jsp/card.jsp").forward(request, response);
     }
 

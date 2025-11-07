@@ -17,7 +17,8 @@
     </header>
 
     <div class="container">
-        <a href="${pageContext.request.contextPath}/deck?id=${deckId}&categoryId=${categoryId}" class="back-link">← Quay lại học</a>
+        <!-- SỬA: Chỉ truyền deckId để DeckServlet load thẻ và cập nhật Session -->
+        <a href="${pageContext.request.contextPath}/deck?id=${deckId}" class="back-link">← Quay lại học</a>
         <h2>Quản lý các thẻ</h2>
 
         <div class="card-list">
