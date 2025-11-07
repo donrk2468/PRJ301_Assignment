@@ -19,57 +19,64 @@
         </header>
         <div class="container">
             <h2>Chủ đề của bạn</h2>
-            <div class="item-grid">
-                <c:forEach var="cat" items="${categoryList}">
-                    <div class="item-card data-category-id">
+            <c:choose>
+                <c:when test="${not empty categoryList}">
 
-                        <div class="actions" style="flex-direction: column; align-items: flex-start;"> 
-                            <form action="updateCategory" method="post" class="update-form" style="display:flex; flex-direction: column; width: 100%;">
-                                <input type="hidden" name="categoryId" value="${cat.categoryId}"/>
-                                <input type="text" 
-                                       name="categoryName" 
-                                       value="${cat.categoryName}" 
-                                       class="category-name-input" 
-                                       data-original-value="${cat.categoryName}" readonly/> 
+                    <div class="item-grid">
+                        <c:forEach var="cat" items="${categoryList}">
+                            <div class="item-card data-category-id">
 
-                                <div class="edit-buttons" style="display: flex; flex-direction: row; gap: 10px; margin-top: 10px;">
+                                <div class="actions" style="flex-direction: column; align-items: flex-start;"> 
+                                    <form action="updateCategory" method="post" class="update-form" style="display:flex; flex-direction: column; width: 100%;">
+                                        <input type="hidden" name="categoryId" value="${cat.categoryId}"/>
+                                        <input type="text" 
+                                               name="categoryName" 
+                                               value="${cat.categoryName}" 
+                                               class="category-name-input" 
+                                               data-original-value="${cat.categoryName}" readonly/> 
 
-                                    <button type="button" 
-                                            class="btn btn-primary toggle-button btn-sua" 
-                                            style="padding: 5px 10px;">
-                                        Sửa tên
-                                    </button>
+                                        <div class="edit-buttons" style="display: flex; flex-direction: row; gap: 10px; margin-top: 10px;">
 
-                                    <button type="submit" 
-                                            class="btn btn-primary btn-success toggle-button btn-luu" 
-                                            style="padding: 5px 10px; display: none;">
-                                        Lưu
-                                    </button>
+                                            <button type="button" 
+                                                    class="btn btn-primary toggle-button btn-sua" 
+                                                    style="padding: 5px 10px;">
+                                                Sửa tên
+                                            </button>
 
-                                    <button type="button" 
-                                            class="btn btn-secondary toggle-button btn-huy" 
-                                            style="padding: 5px 10px; display: none;">
-                                        Hủy
-                                    </button>
+                                            <button type="submit" 
+                                                    class="btn btn-primary btn-success toggle-button btn-luu" 
+                                                    style="padding: 5px 10px; display: none;">
+                                                Lưu
+                                            </button>
 
+                                            <button type="button" 
+                                                    class="btn btn-secondary toggle-button btn-huy" 
+                                                    style="padding: 5px 10px; display: none;">
+                                                Hủy
+                                            </button>
+
+                                        </div>
+                                    </form>
+                                    <a href="${pageContext.request.contextPath}/category?id=${cat.categoryId}"
+                                       class="btn btn-primary btn-success toggle-button" 
+                                       style="padding: 5px 10px; margin-top: 10px; background: #0d6efd;">
+                                        Truy Cập
+                                    </a>
+                                    <a href="deleteCategory?id=${cat.categoryId}" 
+                                       onclick="return confirm('Bạn có chắc muốn xóa chủ đề này?');" 
+                                       class="btn btn-danger" 
+                                       style="padding: 5px 10px; margin-top: 10px;">
+                                        Xóa
+                                    </a>
                                 </div>
-                            </form>
-                            </a>
-                            <a href="${pageContext.request.contextPath}/category?id=${cat.categoryId}"
-                               class="btn btn-primary btn-success toggle-button" 
-                               style="padding: 5px 10px; margin-top: 10px; background: #0d6efd;">
-                                Truy Cập
-                            </a>
-                            <a href="deleteCategory?id=${cat.categoryId}" 
-                               onclick="return confirm('Bạn có chắc muốn xóa chủ đề này?');" 
-                               class="btn btn-danger" 
-                               style="padding: 5px 10px; margin-top: 10px;">
-                                Xóa
-                            </a>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
+                            </div>
+                        </c:forEach>
+                </div>
+                    </c:when>
+                <c:otherwise>
+                    <p style="padding: 2rem; background-color: #e9ecef; border-radius: 8px; text-align: center;">Chủ đề này chưa có thư mục nào. Hãy tạo một bộ thẻ mới bên dưới!</p>
+                </c:otherwise>
+            </c:choose>
 
             <div class="form-container">
                 <h3>Thêm chủ đề mới</h3>

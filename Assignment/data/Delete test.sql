@@ -1,2 +1,2 @@
-delete users where user_id between 1000 and 1100
+delete users where user_id = 1018
 select * from users

@@ -7,7 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.logging.Level; 
 import java.util.logging.Logger;
 
 @WebServlet(urlPatterns = {"/register"})

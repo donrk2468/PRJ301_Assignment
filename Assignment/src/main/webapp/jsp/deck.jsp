@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </c:forEach>
-                    </div>
+                    </div>  
                 </c:when>
                 <c:otherwise>
                     <p style="padding: 2rem; background-color: #e9ecef; border-radius: 8px; text-align: center;">Chủ đề này chưa có bộ thẻ nào. Hãy tạo một bộ thẻ mới bên dưới!</p>
